@@ -16,15 +16,6 @@ function LoginPage() {
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="phone_number">No HP</label>
-            <input
-              type="text"
-              name=""
-              id="phone_number"
-              className="border p-3 rounded-md"
-            />
-          </div>
-          <div className="flex flex-col">
             <label htmlFor="password">Kata Sandi</label>
             <input
               type="text"
