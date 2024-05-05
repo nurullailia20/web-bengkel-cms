@@ -42,7 +42,7 @@ function SideBar() {
           ))}
         </ul>
       </div>
-      <button className="flex items-center gap-3 cursor-pointer py-3 px-4 hover:bg-gray-100">
+      <button onClick={() => router.push("/login")} className="flex items-center gap-3 cursor-pointer py-3 px-4 hover:bg-gray-100">
         <span>
           <TbLogout2 />
         </span>
