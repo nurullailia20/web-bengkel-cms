@@ -13,14 +13,11 @@ function MemberListPage() {
         "http://localhost:4000/customer"
       );
       const responseData = await response.json();
-      // console.log(responseData)
       setData(responseData.data);
       return responseData.data;
     };
     fetchData();
   }, []);
-
-  // console.log(data);
 
   return (
     <section className="flex h-full w-full flex-col gap-3">
