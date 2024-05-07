@@ -8,7 +8,7 @@ function ProfileCard() {
     <div className="h-[60px] w-[350px] border rounded-full flex justify-between p-2 items-center shadow-md">
       <div className="h-full w-auto flex gap-x-2">
         <div className="h-10 w-12 rounded-full">
-          <Image width={40} height={40} src={user}/>
+          <Image width={40} height={40} src={user} alt="user"/>
         </div>
         <div className="h-10 w-full flex flex-col justify-center gap-y-1 ">
           <div className="font-semibold">Halo, Dea</div>
