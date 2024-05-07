@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsPencilSquare } from "react-icons/bs";
@@ -6,6 +7,19 @@ import { HiInformationCircle } from "react-icons/hi";
 
 function MemberListPage() {
   const [data, setData] = useState([]);
+  const router = useRouter();
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`http://localhost:4000/customer/${id}`)
+      alert(response.message)
+      router.reload()
+      return response
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,6 +122,7 @@ function MemberListPage() {
                     <BsPencilSquare className="h-5 w-5" />
                   </button>
                   <button
+                    onClick={() => handleDelete(item.id)}
                     data-twe-toggle="tooltip"
                     data-twe-html="true"
                     data-twe-ripple-init
