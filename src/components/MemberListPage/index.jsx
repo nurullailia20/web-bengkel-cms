@@ -10,17 +10,17 @@ function MemberListPage() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "https://6635f5f3415f4e1a5e25d6c5.mockapi.io/api/customers"
+        "http://localhost:4000/customer"
       );
       const responseData = await response.json();
       // console.log(responseData)
-      setData(responseData);
-      return responseData;
+      setData(responseData.data);
+      return responseData.data;
     };
     fetchData();
   }, []);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <section className="flex h-full w-full flex-col gap-3">
@@ -60,7 +60,7 @@ function MemberListPage() {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <tr
                 key={index}
                 className={
@@ -73,19 +73,19 @@ function MemberListPage() {
                   {index + 1}
                 </td>
                 <td className="border-gray-200 bg-white px-5 py-5 text-sm">
-                  {item.nama}
+                  {item.name}
                 </td>
                 <td className="border-gray-200 bg-white px-5 py-5 text-sm">
-                  {item.kendaraan}
+                  {item.vehicle}
                 </td>
                 <td className="border-gray-200 bg-white px-5 py-5 text-sm">
-                  {item.nomor_kendaraan}
+                  {item.police_number}
                 </td>
                 <td className="border-gray-200 bg-white px-5 py-5 text-sm">
-                  {item.nomor_telepon}
+                  {item.phone_number}
                 </td>
                 <td className="border-gray-200 bg-white px-5 py-5 text-sm">
-                  {item.total_poin}
+                  {item.total_point}
                 </td>
                 <td className="gap-x-2 border-gray-200 bg-white px-5 py-5 text-sm">
                   <button
