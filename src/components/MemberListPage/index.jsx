@@ -17,7 +17,9 @@ function MemberListPage() {
       const response = await axios.delete(
         `http://localhost:4000/customer/${id}`
       );
-      alert(response.message);
+      if (response.status === 200) {
+        alert(response.data.message);
+      } else alert(response.data.message);
       router.reload();
       return response;
     } catch (error) {

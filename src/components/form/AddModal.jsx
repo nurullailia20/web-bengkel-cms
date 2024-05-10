@@ -25,8 +25,8 @@ export default function AddModal({ open, handleModalButton }) {
     try {
       const response = await axios.post("http://localhost:4000/customer", val);
       if (response.status === 200) {
-        alert(response.message);
-      } else alert(response.message);
+        alert(response.data.message);
+      } else alert(response.data.message);
       reload();
       return response;
     } catch (error) {
