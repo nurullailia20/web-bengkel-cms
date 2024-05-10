@@ -4,28 +4,30 @@ import React, { useEffect, useState } from "react";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsPencilSquare } from "react-icons/bs";
 import { HiInformationCircle } from "react-icons/hi";
+import AddModal from "../form/AddModal";
 
 function MemberListPage() {
   const [data, setData] = useState([]);
+  const [open, setOpen] = useState(false);
+  const handleModal = () => setOpen(!open);
   const router = useRouter();
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/customer/${id}`)
-      alert(response.message)
-      router.reload()
-      return response
-
+      const response = await axios.delete(
+        `http://localhost:4000/customer/${id}`
+      );
+      alert(response.message);
+      router.reload();
+      return response;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        "http://localhost:4000/customer"
-      );
+      const response = await fetch("http://localhost:4000/customer");
       const responseData = await response.json();
       setData(responseData.data);
       return responseData.data;
@@ -39,7 +41,10 @@ function MemberListPage() {
         <h2 className="text-xl font-semibold leading-tight">
           Pelanggan Terdaftar
         </h2>
-        <button className="rounded-md bg-teal-400 px-4 py-2 text-sm text-white">
+        <button
+          className="rounded-md bg-teal-400 px-4 py-2 text-sm text-white"
+          onClick={handleModal}
+        >
           Tambah
         </button>
       </div>
@@ -139,6 +144,7 @@ function MemberListPage() {
           </tbody>
         </table>
       </div>
+      {open && <AddModal open={open} handleModalButton={handleModal} />}
     </section>
   );
 }
