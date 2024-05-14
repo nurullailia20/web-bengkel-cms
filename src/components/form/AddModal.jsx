@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogPanel,
   DialogTitle,
@@ -15,7 +14,6 @@ export default function AddModal({ open, handleModalButton }) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
