@@ -8,8 +8,11 @@ import AddModal from "../form/AddModal";
 
 function MemberListPage() {
   const [data, setData] = useState([]);
-  const [open, setOpen] = useState(false);
-  const handleModal = () => setOpen(!open);
+  const [formModalState, setFormModalState] = useState({open:false, selectedId:undefined});
+  const handleModal = (open, selectedId="") => {
+    setFormModalState({open, selectedId})
+  };
+
   const router = useRouter();
 
   const handleDelete = async (id) => {
@@ -45,7 +48,7 @@ function MemberListPage() {
         </h2>
         <button
           className="rounded-md bg-teal-400 px-4 py-2 text-sm text-white"
-          onClick={handleModal}
+          onClick={() => handleModal(!formModalState.open)}
         >
           Tambah
         </button>
@@ -124,6 +127,7 @@ function MemberListPage() {
                     data-twe-ripple-color="light"
                     title="Edit Data"
                     type="button"
+                    onClick={() => handleModal(!formModalState.open, item.id)}
                     className="mx-1 rounded-[6px] bg-teal-400 p-2 text-[14px] font-normal text-gray-50"
                   >
                     <BsPencilSquare className="h-5 w-5" />
@@ -146,7 +150,7 @@ function MemberListPage() {
           </tbody>
         </table>
       </div>
-      {open && <AddModal open={open} handleModalButton={handleModal} />}
+      {formModalState.open && <AddModal open={formModalState.open} setOpen={(open) => handleModal(open)} selectedId = {formModalState.selectedId}  />}
     </section>
   );
 }
