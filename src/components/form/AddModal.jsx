@@ -5,26 +5,55 @@ import {
   Transition,
   TransitionChild,
 } from "@headlessui/react";
+import { data } from "autoprefixer";
 import axios from "axios";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-export default function AddModal({ open, handleModalButton }) {
+export default function AddModal({ open, setOpen, selectedId = "" }) {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const { reload } = useRouter();
 
+  const toggleModal = () => {
+    setOpen(!open)
+  }
+
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const getMember = async (id) => {
+      const response = await axios.get(`http://localhost:4000/customer/${id}`);
+      setData(response.data.data); 
+    };
+    getMember(selectedId);
+  }, [selectedId]); 
+
+  useEffect(() => {
+    if (selectedId) {
+      setValue("name", data.name); 
+      setValue("vehicle", data.vehicle);
+      setValue("police_number", data.police_number);
+      setValue("phone_number", data.phone_number);
+    }
+    }, [selectedId, data]); 
+  
+
   const onSubmit = async (val) => {
     try {
-      const response = await axios.post("http://localhost:4000/customer", val);
-      if (response.status === 200) {
-        alert(response.data.message);
-      } else alert(response.data.message);
+      let response;
+      if (selectedId) {
+        response = await axios.put(`http://localhost:4000/customer/${selectedId}`, val);
+      } else {
+        response = await axios.post("http://localhost:4000/customer", val);
+      }
+      alert(response.data.message);
       reload();
       return response;
     } catch (error) {
@@ -37,7 +66,7 @@ export default function AddModal({ open, handleModalButton }) {
       <Dialog
         as="div"
         className="relative z-10 focus:outline-none"
-        onClose={handleModalButton}
+        onClose={toggleModal}
       >
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
@@ -52,7 +81,7 @@ export default function AddModal({ open, handleModalButton }) {
             >
               <DialogPanel className="w-full max-w-md rounded-xl bg-white shadow-xl border p-5 border-teal-400 flex flex-col space-y-5">
                 <DialogTitle as="h3" className="text-xl font-medium">
-                  Masukkan Data Customer
+                  {selectedId? "Perbarui " : "Masukkan "} Data Member
                 </DialogTitle>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
@@ -115,10 +144,9 @@ export default function AddModal({ open, handleModalButton }) {
                     ) : null} */}
                   </div>
 
-                  <input
-                    type="submit"
-                    className="cursor-pointer items-center gap-2 rounded-md bg-teal-400 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline data-[hover]:bg-teal-500 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white"
-                  />
+                  <button className="cursor-pointer items-center gap-2 rounded-md bg-teal-400 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline data-[hover]:bg-teal-500 data-[open]:bg-gray-700 data-[focus]:outline-1 data-[focus]:outline-white">
+                    {selectedId.length > 0 ? "Simpan " : "Tambah "}
+                  </button>
                 </form>
               </DialogPanel>
             </TransitionChild>
