@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { BiTrashAlt } from "react-icons/bi";
 import { BsPencilSquare } from "react-icons/bs";
 import { HiInformationCircle } from "react-icons/hi";
-import AddModal from "../form/AddModal";
+import MemberModal from "../form/MemberModal";
 
 function MemberListPage() {
   const [data, setData] = useState([]);
@@ -150,7 +150,7 @@ function MemberListPage() {
           </tbody>
         </table>
       </div>
-      {formModalState.open && <AddModal open={formModalState.open} setOpen={(open) => handleModal(open)} selectedId = {formModalState.selectedId}  />}
+      {formModalState.open && <MemberModal open={formModalState.open} setOpen={(open) => handleModal(open)} selectedId = {formModalState.selectedId}  />}
     </section>
   );
 }
