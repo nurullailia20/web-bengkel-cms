@@ -5,6 +5,7 @@ import { BiTrashAlt } from "react-icons/bi";
 import { BsPencilSquare } from "react-icons/bs";
 import { HiInformationCircle } from "react-icons/hi";
 import ProductModal from "../form/ProductModal ";
+import Cookies from "js-cookie";
 
 function ProductListPage() {
   const [data, setData] = useState([]);
@@ -38,6 +39,10 @@ function ProductListPage() {
       return responseData.data;
     };
     fetchData();
+  }, []);
+
+  React.useEffect(() => {
+    if (!Cookies.get("token")) router.push("/login");
   }, []);
 
   return (
